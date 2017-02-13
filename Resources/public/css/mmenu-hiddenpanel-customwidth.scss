@@ -1,0 +1,8 @@
+@import "../../../../../vendor/jQuery.mmenu/src/css/_imp/_mixins_sizing.scss";
+@include mm_sizing(
+        ".mm-hiddenpanel-customwidth",  // additional classname for the menu.
+        0.8, 325px, 325px);      // width, min-width, max-width
+
+#zikula-admin-hiddenpanel-menu:not( .mm-menu ) {
+  display: none;
+}

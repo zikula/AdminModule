@@ -11,7 +11,6 @@
 
 namespace Zikula\AdminModule\Controller;
 
-use ModUtil;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -320,19 +319,7 @@ class AdminInterfaceController extends AbstractController
             }
 
             $links = $this->get('zikula.link_container_collector')->getLinks($adminModule['name'], 'admin');
-            if ($links == false) {
-                // @deprecated remove at Core-2.0
-                $links = \ModUtil::apiFunc($adminModule['name'], 'admin', 'getLinks');
-                if ($links == false) {
-                    $links = [];
-                }
-            }
-            try {
-                $adminIconPath = $this->get('zikula_core.common.theme.asset_helper')->resolve('@' . $adminModule['name'] . ':images/admin.png');
-            } catch (\Exception $e) {
-                // @deprecated remove at Core-2.0
-                $adminIconPath = $baseUrl . ModUtil::getModuleImagePath($adminModule['name']);
-            }
+            $adminIconPath = $this->get('zikula_core.common.theme.asset_helper')->resolve('@' . $adminModule['name'] . ':images/admin.png');
 
             $module = [
                 'menutexturl' => $menuTextUrl,

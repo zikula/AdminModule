@@ -1,0 +1,41 @@
+{
+    "name": "zikula/admin-module",
+    "version": "2.0.0",
+    "description": "Backend administration interface",
+    "type": "zikula-module",
+    "license": "LGPL-3.0+",
+    "authors": [
+        {
+            "name": "Zikula",
+            "homepage": "http://zikula.org/"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Zikula\\AdminModule\\": "" }
+    },
+    "require": {
+        "php": ">=5.5.9",
+        "jquery.mmenu": "6.*"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/FrDH/jQuery.mmenu"
+        }
+    ],
+    "extra": {
+        "zikula": {
+            "class": "Zikula\\AdminModule\\ZikulaAdminModule",
+            "core-compatibility": ">=1.4.1",
+            "displayname": "Administration panel",
+            "url": "adminpanel",
+            "capabilities": {
+                "admin": {"route": "zikulaadminmodule_admin_view"}
+            },
+            "securityschema": {
+                "ZikulaAdminModule::": "Admin Category name::Admin Category ID",
+                "ZikulaAdminModule:adminnavblock:": "Block title::Block ID"
+            }
+        }
+    }
+}

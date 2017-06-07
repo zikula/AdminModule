@@ -1,0 +1,39 @@
+{{ pageAddAsset('javascript', asset('jquery-mmenu/js/jquery.mmenu.all.js'), 100) }}
+{{ pageAddAsset('javascript', zasset('@ZikulaAdminModule:js/ZikulaAdminModule.Modules.Panel.MMenuConfig.js'), 101) }}
+{{ pageAddAsset('javascript', zasset('@ZikulaAdminModule:js/ZikulaAdminModule.Modal.Fix.js'), 102) }}
+{{ pageAddAsset('stylesheet', asset('jquery-mmenu/css/jquery.mmenu.all.css'), 100) }}
+{{ pageAddAsset('stylesheet', zasset('@ZikulaAdminModule:css/mmenu-hiddenpanel-customwidth.css'), 101) }}
+
+{% macro draw(links, caller, module) %}
+    {% for link in links %}
+        <li{% if caller._zkModule == module.modname and caller.path == link.url %} class="selected"{% endif %}>
+            <a href="{{ link.url }}" title="{{ link.text }}">{% if link.icon is defined %}<i class="{{ link.icon }}"></i> {% endif %}{{ link.text }}</a>
+            {% if link.links is defined %}
+                <ul class="text-left">{{ _self.draw(link.links, caller, module) }}</ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+{% endmacro %}
+
+{% import _self as menu %}
+
+<a href="#zikula-admin-hiddenpanel-menu"><i class="fa fa-bars" title="{{ __("Show administration panel") }}"></i></a>
+<nav id="zikula-admin-hiddenpanel-menu">
+    <div class="text-left">
+        <h2><img src="{{ asset('bundles/core/images/logo.gif') }}" style="height: 28px" alt="{{ __('Administration') }}"> {{ __('Administration') }}</h2>
+        <ul>
+            {% for module in adminMenu %}
+                <li{% if caller._zkModule == module.modname %} class="selected"{% endif %}>
+                    <a href="{{ module.menutexturl }}" title="{{ module.menutext|e('html_attr') }}">
+                        <img src="{{ module.icon }}" alt="{{ module.menutext|e('html_attr') }}" style="height: 18px" /> {{ module.menutext|raw }}
+                    </a>
+                    {% if module.links|length > 0 %}
+                        <ul class="text-left">
+                            {{ menu.draw(module.links, caller, module) }}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</nav>
